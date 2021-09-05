@@ -5,7 +5,7 @@ class Test {
 
   Message? get message => _message;
 
-  Test({
+  Test(u, {
       Message? message}){
     _message = message;
 }
