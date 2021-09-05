@@ -3,11 +3,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:musicapptask/Trackscreen.dart';
 import 'package:musicapptask/test.dart';
+import 'package:musicapptask/trackjson.dart';
 
 void main() {
   runApp(MaterialApp(
-    home:  TrendingPage()));
+    home:  TaskScreen()));
 }
 
 class TrendingPage extends StatefulWidget {
@@ -18,6 +20,18 @@ class TrendingPage extends StatefulWidget {
 
 }
 class TrendingPageState extends State <TrendingPage> {
+  Future taskData() async{
+    var response = await http.get(Uri.parse("https://api.musixmatch.com/ws/1.1/track.get?track_id=TRACK_ID&apikey=2d782bc7a52a41ba2fc1ef05b9cf40d7"));
+
+    Map<String, dynamic> track =json.decode(response.body);
+    final tracklist =Trackjson.fromJson(track);
+    print("hii");
+
+    print(tracklist.message!.header!);
+
+
+
+  }
 
 
 
@@ -82,12 +96,10 @@ class TrendingPageState extends State <TrendingPage> {
                         title: Text(snapshot.data![index].track!.trackName.toString()),
                         subtitle: Text(snapshot.data![index].track!.albumName.toString()),
                         trailing: Text(snapshot.data![index].track!.artistName.toString()),
-                        onTap: (){
-                          print("data");
-                        },
 
-                      )
 
+
+)
                     ],
                   ),
                 );
