@@ -2,7 +2,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:musicapptask/Components/Listtile.dart';
 import 'package:http/http.dart' as http;
 import 'package:musicapptask/test.dart';
 
@@ -21,15 +20,8 @@ class TrendingPage extends StatefulWidget {
 class TrendingPageState extends State <TrendingPage> {
 
 
-  @override
-  void initState() {
-    super.initState();
-    print("shashi");
-    getData();
-  }
 
   Future<List<Track_list>> getData() async {
-    print("ak");
     var response = await http.get(
       Uri.parse(
           "https://api.musixmatch.com/ws/1.1/chart.tracks.get?apikey=2d782bc7a52a41ba2fc1ef05b9cf40d7"),
@@ -65,7 +57,6 @@ class TrendingPageState extends State <TrendingPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("hii");
     return Scaffold(
       appBar: AppBar(
         title: Text("Trending"),
@@ -78,7 +69,6 @@ class TrendingPageState extends State <TrendingPage> {
         future: getData(),
     builder: (BuildContext context, AsyncSnapshot<List<Track_list>> snapshot) {
       if (snapshot.hasData) {
-        print("print check $snapshot.data[0]");
         return ListView.builder(
             padding: EdgeInsets.all(8),
             itemCount: snapshot.data!.length,
@@ -88,13 +78,13 @@ class TrendingPageState extends State <TrendingPage> {
                   child: Column(
                     children: <Widget>[
                       ListTile(
-                        leading: CircleAvatar(
-                            radius: 30,
-                            /*backgroundImage: NetworkImage(
-                                snapshot.data[index]['picture']['large'])*/),
+
                         title: Text(snapshot.data![index].track!.trackName.toString()),
                         subtitle: Text(snapshot.data![index].track!.albumName.toString()),
-                        trailing: Text(snapshot.data![index].track!.trackName.toString()),
+                        trailing: Text(snapshot.data![index].track!.artistName.toString()),
+                        onTap: (){
+                          print("data");
+                        },
 
                       )
 
