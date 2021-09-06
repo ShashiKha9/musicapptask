@@ -3,13 +3,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:musicapptask/Trackscreen.dart';
+import 'package:musicapptask/Home.dart';
 import 'package:musicapptask/test.dart';
 import 'package:musicapptask/trackjson.dart';
 
 void main() {
   runApp(MaterialApp(
-    home:  TaskScreen()));
+    home:  Home()));
 }
 
 class TrendingPage extends StatefulWidget {
