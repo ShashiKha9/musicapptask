@@ -14,56 +14,57 @@ class HomeState extends State<Home>{
     this.get();
   }
 
-  Future <List<User>>  get() async{
-    var response = await http.get(Uri.parse("https://jsonplaceholder.typicode.com/posts"));
-List <dynamic> user = json.decode(response.body);
+  Future <dynamic> get() async {
+    var response = await http.get(
+        Uri.parse("https://jsonplaceholder.typicode.com/posts"));
+    List <dynamic> user = json.decode(response.body);
     print(response.statusCode);
     print("hii");
-    List<User>list = user.map((e) =>User.fromJson(e)).toList();
-    
-for(var i =0;i<list.length;i++){
-  print(list[i].userId.toString());
+    List<User>list = user.map((e) => User.fromJson(e)).toList();
 
-  return list;
+    for (var i = 0; i < list.length; i++) {
+      print(list[i].body.toString());
 
-
-
-}
-
-
-
-
+      return list[i].title;
+    }
   }
+
   @override
   Widget build(BuildContext context) {
 return Scaffold(
   body: Container(
     child: FutureBuilder(
-      future: get(),
-      builder: (BuildContext context AsyncSnapshot   snapshot){
-    if(snapshot.hasData){
-    return ListView.builder(
-    itemCount: snapshot.data!.length,
-    itemBuilder: (BuildContext context, int index) {
-return Card(
-child: Column(
-children: [
-  ListTile(
-  title: Text(snapshot.data[index].),
-  )
+    future: get(),
+      builder: (BuildContext context, AsyncSnapshot <dynamic> snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+              padding: EdgeInsets.all(8),
+              itemCount: snapshot.data!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return
+                  Card(
+                    child: Column(
+                      children: <Widget>[
+                        ListTile(
 
-    ],
-),
+                          title: Text(snapshot.data),
+                          // subtitle: Text(snapshot.data![index].track!.albumName
+                          //     .toString()),
+                          // trailing: Text(snapshot.data![index].track!.artistName
+                          //     .toString()),
 
-);
 
-    }
-    );
-    }
-    else {
-    return Center(child: CircularProgressIndicator());
-    }
-    }
+                        )
+                      ],
+                    ),
+                  );
+              }
+          );
+        }
+        else {
+          return Center(child: CircularProgressIndicator());
+        }
+      }
     ),
   ),
 
