@@ -14,7 +14,7 @@ class HomeState extends State<Home>{
     this.get();
   }
 
-  Future <dynamic> get() async {
+  Future <List<User>> get() async {
     var response = await http.get(
         Uri.parse("https://jsonplaceholder.typicode.com/posts"));
     List <dynamic> user = json.decode(response.body);
@@ -23,10 +23,11 @@ class HomeState extends State<Home>{
     List<User>list = user.map((e) => User.fromJson(e)).toList();
 
     for (var i = 0; i < list.length; i++) {
-      print(list[i].body.toString());
+      print(list[i].title.toString());
 
-      return list[i].title;
+      // return list;
     }
+    return list;
   }
 
   @override
@@ -35,7 +36,7 @@ return Scaffold(
   body: Container(
     child: FutureBuilder(
     future: get(),
-      builder: (BuildContext context, AsyncSnapshot <dynamic> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot <List<User>> snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(
               padding: EdgeInsets.all(8),
@@ -47,9 +48,9 @@ return Scaffold(
                       children: <Widget>[
                         ListTile(
 
-                          title: Text(snapshot.data),
-                          // subtitle: Text(snapshot.data![index].track!.albumName
-                          //     .toString()),
+                          title: Text(snapshot.data![index].title.toString()),
+                          subtitle: Text(snapshot.data![index].body.toString()
+                              ),
                           // trailing: Text(snapshot.data![index].track!.artistName
                           //     .toString()),
 
